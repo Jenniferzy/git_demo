@@ -15,6 +15,7 @@ jd = json.loads(res.text) # 解析json轉成dict
 data.append(pd.DataFrame(jd['items']['data']))
 
 for i in range(2, jd['items']['last_page'] + 1):
+    print(i)
     payload["page"] = i
     res = requests.get(url, params = payload) # 連線鉅亨網
     jd = json.loads(res.text) # 解析json轉成dict
