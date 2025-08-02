@@ -15,6 +15,7 @@ jd = json.loads(res.text) # 解析json轉成dict
 data.append(pd.DataFrame(jd['items']['data']))
 
 for i in range(2, jd['items']['last_page'] + 1):
+    print(i)
     payload["page"] = i
     res = requests.get(url, params = payload) # 連線鉅亨網
     jd = json.loads(res.text) # 解析json轉成dict
@@ -23,6 +24,7 @@ for i in range(2, jd['items']['last_page'] + 1):
 df = pd.concat(data, ignore_index = True) # 取出新聞資料
 df = df[['newsId', 'title', 'summary']] # 取出特定欄位
 df['link'] = df['newsId'].apply(lambda x: 'https://m.cnyes.com/news/id/' + str(x)) # 建立連結
-df.to_csv('news.csv', encoding='utf-8-sig')
+df.to_csv('news.csv', encoding='utf-8-sig', index = False) # 調參index是指將第一行index不要顯示出來，要不然預設會顯示
+df.to_excel('news.xlsx', index = False)                    # 調參index是指將第一行index不要顯示出來，要不然預設會顯示
 print(df)
 
